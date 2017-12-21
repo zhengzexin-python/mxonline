@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'operation',
     'organization',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,11 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 sys.path.insert(1, os.path.join(BASE_DIR, 'extra_apps'))
 
 AUTHENTICATION_BACKENDS = ('users.views.CustomerBackend',)
+
+# 配置邮箱
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = '18218522288@163.com'
+EMAIL_HOST_PASSWORD = 'python123'  # 授权码而不是登录密码
+EMAIL_USE_TLS = False
+EMAIL_FROM = EMAIL_HOST_USER
