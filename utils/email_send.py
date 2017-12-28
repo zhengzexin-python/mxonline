@@ -30,6 +30,8 @@ def send_email(email, send_type='register'):
     Args:
         email(str):目标邮箱
         send_type(str): 发送类型
+    Returns:
+        send_status(bool): 发送状态: True 成功 False 失败
     """
     email_record = EmailVerifyRecord()
     code = random_str(16)
@@ -44,7 +46,9 @@ def send_email(email, send_type='register'):
     if send_type == 'register':
         email_title = '慕学在线网注册激活链接'
         email_body = '请点击下面链接激活您的账号:http://127.0.0.1:8000/active/{0}'.format(code)
-        send_status =send_mail(email_title, email_body, EMAIL_FROM, [email])
-
-        if send_status:
-            pass
+        send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+    elif send_type == 'forget':
+        email_title = '慕学在线网重置链接'
+        email_body = '请点击下面链接重置您的账号:http://127.0.0.1:8000/reset/{0}'.format(code)
+        send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+    return send_status
