@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'organization',
     'xadmin',
     'crispy_forms',
-    'captcha'
+    'captcha',
+    'pure_pagination'
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'
             ],
         },
     },
@@ -145,3 +147,7 @@ EMAIL_HOST_USER = '18218522288@163.com'
 EMAIL_HOST_PASSWORD = 'python123'  # 授权码而不是登录密码
 EMAIL_USE_TLS = False
 EMAIL_FROM = EMAIL_HOST_USER
+
+# 配置上传文件位置
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
