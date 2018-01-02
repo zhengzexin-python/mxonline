@@ -27,6 +27,8 @@ class CourseOrg(models.Model):
     image = models.ImageField(upload_to='org/%Y/%m', verbose_name='封面')
     address = models.CharField(max_length=150, verbose_name='机构地址')
     city = models.ForeignKey(City, verbose_name='所在城市')
+    student_nums = models.IntegerField(default=0, verbose_name='学习人数')
+    course_nums = models.IntegerField(default=0, verbose_name=u"课程数")
     add_time = models.DateTimeField(default=datetime_safe.datetime.now, verbose_name='添加时间')
 
     def __str__(self):

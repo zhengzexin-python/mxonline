@@ -21,11 +21,17 @@ class OrgView(View):
         if category:
             all_orgs = all_orgs.filter(category=category)
 
-        #过滤城市
+        # 城市过滤
         city_id = request.GET.get('city', '')
         if city_id:
             all_orgs = all_orgs.filter(city_id=city_id)
 
+        sort = request.GET.get('sort', '')
+        if sort:
+            if sort == 'students':
+                all_orgs = all_orgs.order_by('-student_nums')
+            elif sort == 'courses':
+                all_orgs = all_orgs.order_by('-course_nums')
         org_count = all_orgs.count()
 
         # 分页
@@ -41,5 +47,6 @@ class OrgView(View):
             'all_citys': all_citys,
             'org_count': org_count,
             'category': category,
-            'city_id': city_id
+            'city_id': city_id,
+            'sort': sort
         })
