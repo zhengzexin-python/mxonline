@@ -15,6 +15,7 @@ class OrgView(View):
     def get(self, request):
         all_orgs = CourseOrg.objects.all()
         all_citys = City.objects.all()
+        hot_orgs = CourseOrg.objects.all().order_by('-click_nums')[:3]
 
         # 类别过滤
         category = request.GET.get('ct', '')
@@ -48,5 +49,6 @@ class OrgView(View):
             'org_count': org_count,
             'category': category,
             'city_id': city_id,
-            'sort': sort
+            'sort': sort,
+            'hot_orgs': hot_orgs
         })
