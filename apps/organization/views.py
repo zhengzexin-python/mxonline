@@ -6,6 +6,7 @@ from pure_pagination import Paginator, PageNotAnInteger
 
 from organization.forms import UserAskForm
 from .models import CourseOrg, City
+from courses.models import Course
 
 
 class OrgView(View):
@@ -68,3 +69,67 @@ class AddUserAskView(View):
             return HttpResponse('{"status": "success"}', content_type='application/json')
         else:
             return HttpResponse('{"status": "fail", "msg": "添加出错"}', content_type='application/json')
+
+
+class OrgHomeView(View):
+    """
+    机构首页
+    """
+
+    def get(self, request, org_id):
+        current_page = 'home'
+        course_org = CourseOrg.objects.get(id=org_id)
+        courses = course_org.course_set.all()[:3]
+        teachers = course_org.teacher_set.all()[:1]
+        return render(request, 'org-detail-homepage.html', {
+            'courses': courses,
+            'teachers': teachers,
+            'course_org': course_org,
+            'current_page': current_page
+        })
+
+
+class OrgCourseView(View):
+    """
+    机构课程列表
+    """
+
+    def get(self, request, org_id):
+        current_page = 'course'
+        course_org = CourseOrg.objects.get(id=org_id)
+        courses = course_org.course_set.all()
+        return render(request, 'org-detail-course.html', {
+            'courses': courses,
+            'course_org': course_org,
+            'current_page': current_page
+        })
+
+
+class OrgDescView(View):
+    """
+    机构介绍
+    """
+
+    def get(self, request, org_id):
+        current_page = 'desc'
+        course_org = CourseOrg.objects.get(id=org_id)
+        return render(request, 'org-detail-desc.html', {
+            'course_org': course_org,
+            'current_page': current_page
+        })
+
+
+class OrgTeacherView(View):
+    """
+    机构讲师
+    """
+
+    def get(self, request, org_id):
+        current_page = 'teacher'
+        course_org = CourseOrg.objects.get(id=org_id)
+        teachers = course_org.teacher_set.all()
+        return render(request, 'org-detail-teachers.html', {
+            'course_org': course_org,
+            'teachers': teachers,
+            'current_page': current_page
+        })

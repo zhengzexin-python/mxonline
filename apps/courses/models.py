@@ -1,11 +1,17 @@
 from django.db import models
 from django.utils import datetime_safe
 
+from organization.models import CourseOrg
+
 
 # Create your models here.
 
 
 class Course(models.Model):
+    """
+    课程
+    """
+    course_org = models.ForeignKey(CourseOrg, verbose_name='课程机构', null=True, blank=True)
     name = models.CharField(max_length=50, verbose_name='课程名')
     desc = models.CharField(max_length=300, verbose_name='课程描述')
     detail = models.TextField(verbose_name='课程详情')
@@ -30,6 +36,9 @@ class Course(models.Model):
 
 
 class Lesson(models.Model):
+    """
+    章节
+    """
     course = models.ForeignKey(Course, verbose_name='课程')
     name = models.CharField(max_length=100, verbose_name='章节名')
     add_time = models.DateTimeField(
@@ -44,6 +53,9 @@ class Lesson(models.Model):
 
 
 class Video(models.Model):
+    """
+    视频
+    """
     lesson = models.ForeignKey(Lesson, verbose_name='章节名')
     name = models.CharField(max_length=100, verbose_name='视频名')
     add_time = models.DateTimeField(
@@ -55,6 +67,9 @@ class Video(models.Model):
 
 
 class CourseResource(models.Model):
+    """
+    课程资源
+    """
     course = models.ForeignKey(Course, verbose_name='课程')
     name = models.CharField(max_length=100, verbose_name='名称')
     download = models.FileField(
