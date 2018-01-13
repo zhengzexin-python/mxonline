@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import OrgView, AddUserAskView, OrgHomeView, OrgCourseView, OrgDescView, OrgTeacherView
+from .views import OrgView, AddUserAskView, OrgHomeView, OrgCourseView, OrgDescView, OrgTeacherView, AddFavView
 
 app_name = 'org'
 
@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^course/(?P<org_id>\d+)/$', OrgCourseView.as_view(), name='course'),
     url(r'^desc/(?P<org_id>\d+)/$', OrgDescView.as_view(), name='desc'),
     url(r'^teacher/(?P<org_id>\d+)/$', OrgTeacherView.as_view(), name='teacher'),
-
+    # 用户收藏功能
+    url(r'^add_fav/$', AddFavView.as_view(), name='add_fav'),
 ]
