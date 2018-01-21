@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^reset/(?P<code>.*)/$', ResetView.as_view(), name='reset'),
     url(r'^modify/$', ModifyView.as_view(), name='modify'),
     url(r'^org/', include('organization.urls')),
-    url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT})
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
+    url(r'^course/', include('courses.urls'))
 
 ]
