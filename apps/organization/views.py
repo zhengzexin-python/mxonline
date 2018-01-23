@@ -159,6 +159,7 @@ class AddFavView(View):
     """
     用户收藏
     """
+
     def post(self, request):
         fav_id = request.POST.get('fav_id', 0)
         fav_type = request.POST.get('fav_type', 0)
@@ -181,8 +182,6 @@ class AddFavView(View):
                 return HttpResponse('{"status": "success", "msg": "已收藏"}', content_type='application/json')
             else:
                 return HttpResponse('{"status": "fail", "msg": "收藏出错"}', content_type='application/json')
-
-
 
 
 

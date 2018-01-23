@@ -24,11 +24,27 @@ class Course(models.Model):
     fav_nums = models.IntegerField(default=0, verbose_name='收藏人数')
     image = models.ImageField(upload_to='courses/%Y/%m', verbose_name='封面')
     click_nums = models.IntegerField(default=0, verbose_name='点击数')
+    category = models.CharField(max_length=20, verbose_name='课程类别', default='')
+    tag = models.CharField(max_length=20, verbose_name='课程标签', default='')
     add_time = models.DateTimeField(
         default=datetime_safe.datetime.now, verbose_name='添加时间')
 
     def __str__(self):
         return self.name
+
+    def get_zj_nums(self):
+        """
+        获取章节数
+        :return:
+        """
+        return self.lesson_set.all().count()
+
+    def get_learn_users(self):
+        """
+        获取学习用户
+        :return:
+        """
+        return self.usercourse_set.all()[:5]
 
     class Meta:
         verbose_name = '课程'
@@ -61,6 +77,9 @@ class Video(models.Model):
     add_time = models.DateTimeField(
         default=datetime_safe.datetime.now, verbose_name='添加时间')
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = '视频'
         verbose_name_plural = verbose_name
@@ -76,6 +95,9 @@ class CourseResource(models.Model):
         upload_to='course/resource/%Y/%m', verbose_name='资源位置')
     add_time = models.DateTimeField(
         default=datetime_safe.datetime.now, verbose_name='添加时间')
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = '课程资源'
