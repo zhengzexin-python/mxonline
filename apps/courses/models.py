@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import datetime_safe
 
-from organization.models import CourseOrg
+from organization.models import CourseOrg,Teacher
 
 
 # Create your models here.
@@ -26,6 +26,9 @@ class Course(models.Model):
     click_nums = models.IntegerField(default=0, verbose_name='点击数')
     category = models.CharField(max_length=20, verbose_name='课程类别', default='')
     tag = models.CharField(max_length=20, verbose_name='课程标签', default='')
+    teacher = models.ForeignKey(Teacher, verbose_name='课程讲师', null=True, blank=True)
+    you_need_know = models.CharField(max_length=300, verbose_name='课程须知', default='')
+    teacher_tell = models.CharField(max_length=300, verbose_name='老师告诉你能学到什么', default='')
     add_time = models.DateTimeField(
         default=datetime_safe.datetime.now, verbose_name='添加时间')
 
@@ -46,6 +49,9 @@ class Course(models.Model):
         """
         return self.usercourse_set.all()[:5]
 
+    def get_lessons(self):
+        return self.lesson_set.all()
+
     class Meta:
         verbose_name = '课程'
         verbose_name_plural = verbose_name
@@ -63,6 +69,9 @@ class Lesson(models.Model):
     def __str__(self):
         return self.name
 
+    def get_videos(self):
+        return self.video_set.all()
+
     class Meta:
         verbose_name = '章节'
         verbose_name_plural = verbose_name
@@ -74,8 +83,10 @@ class Video(models.Model):
     """
     lesson = models.ForeignKey(Lesson, verbose_name='章节名')
     name = models.CharField(max_length=100, verbose_name='视频名')
+    learn_time = models.IntegerField(default=0, verbose_name='学习时长(分钟)')
     add_time = models.DateTimeField(
         default=datetime_safe.datetime.now, verbose_name='添加时间')
+    url = models.CharField(max_length=200, verbose_name='访问地址', default='')
 
     def __str__(self):
         return self.name
